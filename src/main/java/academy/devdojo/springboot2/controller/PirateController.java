@@ -4,7 +4,6 @@ import academy.devdojo.springboot2.domain.Pirate;
 import academy.devdojo.springboot2.requests.PiratePostRequestBody;
 import academy.devdojo.springboot2.requests.PiratePutRequestBody;
 import academy.devdojo.springboot2.service.PirateService;
-import academy.devdojo.springboot2.util.DateUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -14,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -22,18 +20,15 @@ import java.util.List;
 @Log4j2 //biblioteca que permite uso de recurso equivalente ao console.log
 @RequiredArgsConstructor
 public class PirateController {
-    private final DateUtil dateUtil;
     private final PirateService pirateService;
 
     @GetMapping
     public ResponseEntity<Page<Pirate>> list(Pageable pageable) {
-        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
         return new ResponseEntity<>(pirateService.listAll(pageable), HttpStatus.OK);
     }
 
     @GetMapping(path="/all")
     public ResponseEntity<List<Pirate>> listAll() {
-        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
         return new ResponseEntity<>(pirateService.listAllNonPageable(), HttpStatus.OK);
     }
 
