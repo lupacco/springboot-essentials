@@ -17,15 +17,14 @@ import java.util.Optional;
 @DataJpaTest
 @DisplayName("Test for Pirate Repository")
 class PirateRepositoryTest {
+
     @Autowired
     private PirateRepository pirateRepository;
 
-    private PirateCreator pirateCreator;
-
     @Test
-    @DisplayName("Save creates/persist pirate when Successul")
+    @DisplayName("Save creates/persist pirate when Successful")
     void save_PersistPirate_WhenSuccessful() {
-        Pirate pirateToBeSaved = pirateCreator.createPirateToBeSaved();
+        Pirate pirateToBeSaved = PirateCreator.createPirateToBeSaved();
         Pirate savedPirate = this.pirateRepository.save(pirateToBeSaved);
 
         log.info(savedPirate.getName());
@@ -38,9 +37,9 @@ class PirateRepositoryTest {
     }
 
     @Test
-    @DisplayName("Save updates pirate when Successul")
+    @DisplayName("Save updates pirate when Successful")
     void save_UpdatesPirate_WhenSuccessful() {
-        Pirate pirateToBeSaved = pirateCreator.createPirateToBeSaved();
+        Pirate pirateToBeSaved = PirateCreator.createPirateToBeSaved();
         Pirate savedPirate = this.pirateRepository.save(pirateToBeSaved);
         log.info(savedPirate.getName());
 
@@ -56,9 +55,9 @@ class PirateRepositoryTest {
     }
 
     @Test
-    @DisplayName("Delete removes pirate when Successul")
+    @DisplayName("Delete removes pirate when Successful")
     void delete_RemovesPirate_WhenSuccessful() {
-        Pirate pirateToBeSaved = pirateCreator.createPirateToBeSaved();
+        Pirate pirateToBeSaved = PirateCreator.createPirateToBeSaved();
         Pirate savedPirate = this.pirateRepository.save(pirateToBeSaved);
 
         this.pirateRepository.delete(savedPirate);
@@ -69,9 +68,9 @@ class PirateRepositoryTest {
     }
 
     @Test
-    @DisplayName("Find By Name returns list of pirates when Successul")
+    @DisplayName("Find By Name returns list of pirates when Successful")
     void findByName_ReturnsListOfPirate_WhenSuccessful() {
-        Pirate pirateToBeSaved = pirateCreator.createPirateToBeSaved();
+        Pirate pirateToBeSaved = PirateCreator.createPirateToBeSaved();
         Pirate savedPirate = this.pirateRepository.save(pirateToBeSaved);
 
         List<Pirate> findedPirates = this.pirateRepository.findByName(savedPirate.getName());
@@ -82,19 +81,20 @@ class PirateRepositoryTest {
     @Test
     @DisplayName("Find By Name returns an empty list when pirate not exist")
     void findByName_ReturnsEmptyList_WhenPirateNotExist() {
-        Pirate pirateNotSaved = pirateCreator.createPirateToBeSaved();
+        Pirate pirateNotSaved = PirateCreator.createPirateToBeSaved();
 
-        List<Pirate> findedPirates = this.pirateRepository.findByName(pirateNotSaved.getName());
+        List<Pirate> foundPirates = this.pirateRepository.findByName(pirateNotSaved.getName());
 
-        Assertions.assertThat(findedPirates).isEmpty();
+        Assertions.assertThat(foundPirates).isEmpty();
     }
 
     @Test
-    @DisplayName("Save throw ContraintViolationException when name is empty")
-    void save_ThrowsContraintViolationException_WhenNameIsEmpty() {
+    @DisplayName("Save throw ConstraintViolationException when name is empty")
+    void save_ThrowsConstraintViolationException_WhenNameIsEmpty() {
         Pirate pirateToBeSaved = new Pirate();
 //        Assertions.assertThatThrownBy(() -> this.pirateRepository.save(pirateToBeSaved))
 //                .isInstanceOf(ConstraintViolationException.class);
+
         Assertions.assertThatExceptionOfType(ConstraintViolationException.class)
                 .isThrownBy(() -> this.pirateRepository.save(pirateToBeSaved))
                 .withMessageContaining("The pirate name cannot be empty");

@@ -7,8 +7,6 @@ import academy.devdojo.springboot2.factory.PiratePutRequestBodyCreator;
 import academy.devdojo.springboot2.requests.PiratePostRequestBody;
 import academy.devdojo.springboot2.requests.PiratePutRequestBody;
 import academy.devdojo.springboot2.service.PirateService;
-import com.fasterxml.jackson.databind.introspect.TypeResolutionContext;
-import org.assertj.core.api.AssertionInfo;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -59,7 +57,7 @@ class PirateControllerTest {
     }
     @Test
     @DisplayName("List return list of pirates inside page object when successful")
-    void list_ReturnsListOfPiratesInsidePageObject_WhenSuccessul(){
+    void list_ReturnsListOfPiratesInsidePageObject_WhenSuccessful(){
         String expectedName = PirateCreator.createValidPirate().getName();
         Page<Pirate> piratePage = pirateController.list(null).getBody();
 
@@ -77,7 +75,6 @@ class PirateControllerTest {
     @DisplayName("ListAll return list of pirates when successful")
     void listAll_ReturnsListOfPirates_WhenSuccessful(){
         List<Pirate> pirates = pirateController.listAll().getBody();
-
 
         Assertions.assertThat(pirates)
                 .isNotNull()
@@ -98,7 +95,7 @@ class PirateControllerTest {
     }
 
     @Test
-    @DisplayName("FindByName return  list of pirates when successful")
+    @DisplayName("FindByName return list of pirates when successful")
     void findByName_ReturnsListOfPirate_WhenSuccessful(){
         String expectedPirateName = PirateCreator.createValidPirate().getName();
         List<Pirate> requiredPirates = pirateController.findByName(expectedPirateName).getBody();
@@ -117,7 +114,7 @@ class PirateControllerTest {
         BDDMockito.when(pirateServiceMock.findByName(ArgumentMatchers.anyString()))
                 .thenReturn(Collections.emptyList());
 
-        List<Pirate> requiredPirates = pirateController.findByName("Nome qualquer").getBody();
+        List<Pirate> requiredPirates = pirateController.findByName("Any name").getBody();
 
         Assertions.assertThat(requiredPirates)
                 .isNotNull()
@@ -127,7 +124,7 @@ class PirateControllerTest {
 
     @Test
     @DisplayName("CreatePirate return pirate when successful")
-    void createPirate_ReturnsEmptyList_WhenPirateNotFound(){
+    void createPirate_ReturnsPirate_WhenSuccessful(){
         Long expectedId = PirateCreator.createValidPirate().getId();
         String expectedName = PirateCreator.createValidPirate().getName();
 

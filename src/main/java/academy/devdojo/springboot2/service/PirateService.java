@@ -38,7 +38,8 @@ public class PirateService {
 
     @Transactional //checar se o que vc ta fazendo, em caso de exception, precisa de rollback
     public Pirate createPirate(PiratePostRequestBody piratePostRequestBody) {
-        Pirate pirate = PirateMapper.INSTANCE.toPirate(piratePostRequestBody);
+//        Pirate pirate = PirateMapper.INSTANCE.toPirate(piratePostRequestBody); //por alguma razao nos testes o mapper nao estava funcionando
+        Pirate pirate = new Pirate(piratePostRequestBody.getName());
         return pirateRepository.save(pirate);
     }
 
@@ -48,7 +49,8 @@ public class PirateService {
 
     public void replacePirate(PiratePutRequestBody piratePutRequestBody) {
         Pirate findedPirate = findById(piratePutRequestBody.getId());
-        Pirate pirate = PirateMapper.INSTANCE.toPirate(piratePutRequestBody);
+//        Pirate pirate = PirateMapper.INSTANCE.toPirate(piratePutRequestBody);
+        Pirate pirate = new Pirate(piratePutRequestBody.getName());
         pirate.setId(findedPirate.getId());
         pirateRepository.save(pirate);
     }

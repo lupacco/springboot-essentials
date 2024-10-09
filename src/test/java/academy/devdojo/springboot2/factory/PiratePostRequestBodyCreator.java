@@ -6,7 +6,7 @@ public class PiratePostRequestBodyCreator {
 
     public static PiratePostRequestBody createValidPiratePostRequestBody(){
         return PiratePostRequestBody.builder()
-                .name(PirateCreator.createPirateToBeSaved().getName())
+                .name("Joyboy")
                 .build();
     }
 }
